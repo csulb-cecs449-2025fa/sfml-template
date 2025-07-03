@@ -12,14 +12,11 @@ Just delete the "out" folder in the new project , or else you might get CMake er
 void drawPixel(sf::RenderWindow& window, sf::Vector2i position, sf::Color color) {
 	float pX{ static_cast<float>(position.x) };
 	float pY{ static_cast<float>(position.y) };
-	
-	std::array<sf::Vertex, 1> pixel {
-		sf::Vertex{
-			sf::Vector2f{pX, pY},
-			color
-		}
+	sf::Vertex pixel[1] {
+		sf::Vector2f{pX, pY},
+		color
 	};
-	window.draw(pixel.data(), 1, sf::PrimitiveType::Points);
+	window.draw(pixel, 1, sf::PrimitiveType::Points);
 }
 
 int main() {
@@ -42,17 +39,13 @@ int main() {
 		auto diff{ now - last };
 		last = now;
 		std::cout << 1 / diff.asSeconds() << " FPS " << std::endl;
-
 		/*
 		* DRAWING GOES HERE.
 		*/
 		for (int32_t x{ 0 }; x < 500; ++x) {
-			int32_t y{ static_cast<int32_t>(2.0 / 3.0 * x + 40) };
+			int32_t y{ static_cast<int32_t>(std::round(2.0 / 3.0 * x + 40)) };
 			drawPixel(window, sf::Vector2i{ x, y }, sf::Color::White);
 		}
-
-
-		window.display();
 	}
 
 	return 0;
